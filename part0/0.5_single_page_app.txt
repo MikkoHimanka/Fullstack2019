@@ -1,0 +1,29 @@
+Browser->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+
+Server->Browser: HTML-code
+
+Browser->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+
+Server->Browser: .css file
+
+Browser->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+
+Server->Browser: .js file
+
+note right of Browser
+.js file requests a JSON file from the server
+end note
+
+Browser->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+
+Server->Browser: .json file
+
+note right of Browser
+Browser populates the HTML page with the
+content of JSON file according to
+the code in the .js file
+end note
+
+Browser->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/favicon.ico
+
+Server->Browser: 404 Not Found
