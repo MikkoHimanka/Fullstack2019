@@ -19,6 +19,11 @@ const App = () => {
             name: 'State of a component',
             exercises: 14,
             id: 3
+          },
+          {
+            name: 'Redux',
+            exercises: 11,
+            id: 4
           }
         ]
       }
@@ -40,6 +45,7 @@ const Course = ({course}) => {
     <>
     <Header course={course.name} />
     <Content content={course.parts} />
+    <Total parts={course.parts} />
     </>
     )
 }
@@ -74,7 +80,7 @@ const Total = (props) => {
     props.parts.forEach(value => {
         sum += value.exercises
     });
-    return <p>Number of exercises {sum}</p>
+    return <p>total of {sum} exercises</p>
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
