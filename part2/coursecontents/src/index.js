@@ -75,12 +75,10 @@ const Part = (props) => {
     return <p>{props.part} {props.exercises}</p>
 }
 
-const Total = (props) => {
-    let sum = 0
-    props.parts.forEach(value => {
-        sum += value.exercises
-    });
-    return <p>total of {sum} exercises</p>
+const Total = ({parts}) => {
+    const reducer = (accumulator, currentValue) => accumulator + currentValue.exercises
+    
+    return <p>total of {parts.reduce(reducer, 0)} exercises</p>
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
