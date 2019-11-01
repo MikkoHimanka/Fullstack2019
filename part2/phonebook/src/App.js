@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-
-const Person = (props) => {
-    return <li>{props.name} {props.number}</li>
-}
+import AddNameComponent from './components/AddNameComponent'
+import FilterComponent from './components/FilterComponent'
+import BookComponent from './components/BookComponent'
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -42,30 +41,21 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
-
-  const displayPeople = () => persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person => 
-    <Person name={person.name} key={person.name} number={person.number} />
-  )
   
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <form></form>
-      <div>filter shown with <input value={filter} onChange={handleFilterChange} /></div>
+      <FilterComponent filter={filter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
-      <form onSubmit={AddName}>
-        <div>name: <input value={newName} onChange={handleNameChange} /></div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange}/></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <AddNameComponent 
+        AddName={AddName} 
+        newName={newName} 
+        handleNameChange={handleNameChange} 
+        newNumber={newNumber} 
+        handleNumberChange={handleNumberChange} 
+      />
       <h2>Numbers</h2>
-      <ul style={{listStyleType: 'none', margin: '0', padding: '0'}}>
-        {displayPeople()}
-      </ul>
-      <div>debug: {newName}</div>
+      <BookComponent persons={persons} filter={filter} />
     </div>
   )
 }
