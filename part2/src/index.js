@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
+import axios from 'axios'
 
 const notes = [
   {
@@ -24,6 +25,6 @@ const notes = [
 ]
 
 ReactDOM.render(
-  <App notes={notes} />,
+  <App />,
   document.getElementById('root')
 )
