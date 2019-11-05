@@ -22,7 +22,7 @@ function App() {
   return (
     <>
     <FilterComponent filter={filter} handleFilterChange={handleFilterChange} />
-    <RenderComponent countries={countries} filter={filter} />
+    <RenderComponent countries={countries} filter={filter} handleFilterChange={handleFilterChange} />
     </>
   )
 }

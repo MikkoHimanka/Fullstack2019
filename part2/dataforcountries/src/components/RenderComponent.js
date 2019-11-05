@@ -4,12 +4,8 @@ const Languages = ({language}) => {
     return <li>{language.name}</li>
 }
 
-const CountryList = (props) => {
-    return <li>{props.name}</li>
-}
-
 const Country = ({country}) => {
-    const displayLanguages = () => country.languages.map(language => <Languages language={language} />)
+    const displayLanguages = () => country.languages.map(language => <Languages language={language} key={language.name} />)
     return (
     <div>
         <h2>{country.name}</h2>
@@ -17,12 +13,16 @@ const Country = ({country}) => {
         population: {country.population}
         <h3>languages</h3>
         <ul>{displayLanguages()}</ul> <br />
-        <img src={country.flag} height='100' />
+        <img src={country.flag} height='100' alt='' />
     </div>
     )
 }
 
-const RenderComponent = ({countries, filter}) => {
+const RenderComponent = ({countries, filter, handleFilterChange}) => {
+    const CountryList = (props) => {
+        return <li>{props.name} <button value={props.name} onClick={handleFilterChange}>show</button></li>
+    }
+
     const countAmounts = () => {
         const filtered = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase())) 
         if (filtered.length > 10) return (
