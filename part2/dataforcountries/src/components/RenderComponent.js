@@ -1,4 +1,5 @@
 import React from 'react'
+import Weather from './Weather'
 
 const Languages = ({language}) => {
     return <li>{language.name}</li>
@@ -14,6 +15,7 @@ const Country = ({country}) => {
         <h3>languages</h3>
         <ul>{displayLanguages()}</ul> <br />
         <img src={country.flag} height='100' alt='' />
+        <Weather country={country} />
     </div>
     )
 }
