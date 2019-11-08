@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AddNameComponent from './components/AddNameComponent'
 import FilterComponent from './components/FilterComponent'
 import BookComponent from './components/BookComponent'
-import axios from 'axios'
+import nameService from './services/names'
 
 const App = () => {
   const [ persons, setPersons] = useState([]) 
@@ -11,11 +11,9 @@ const App = () => {
   const [ filter, setFilter ] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    nameService
+      .getAll()
+      .then(value => setPersons(value))
   }, [])
 
   const handleNameChange = (event) => {
@@ -38,7 +36,11 @@ const App = () => {
     }
     const alreadyThere = persons.filter(person => person.name === newName)
     if (personObject.name !== '' && alreadyThere.length === 0){
-      setPersons(persons.concat(personObject))
+      nameService
+        .create(personObject)
+        .then(returnedName => {
+          setPersons(persons.concat(returnedName))
+        })
     } else if (alreadyThere.length !== 0) { 
       alert(`${newName} is already added to phonebook`)
     }
