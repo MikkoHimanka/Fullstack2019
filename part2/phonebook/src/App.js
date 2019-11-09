@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AddNameComponent from './components/AddNameComponent'
 import FilterComponent from './components/FilterComponent'
 import BookComponent from './components/BookComponent'
+import {Notification, ErrorNotification} from './components/Notification'
 import nameService from './services/names'
 
 const App = () => {
@@ -9,6 +10,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ message, setMessage ] = useState(null)
+  const [ error, setError ] = useState(null)
 
   useEffect(() => {
     nameService
@@ -34,6 +37,14 @@ const App = () => {
         name: newName,
         number: newNumber
     }
+
+    const displayNotification = () => {
+      setMessage(`Added ${newName}`)
+      setTimeout(() => {
+          setMessage(null)
+        }, 3000)
+    }
+
     const alreadyThere = persons.filter(person => person.name === newName)
     if (personObject.name !== '' && alreadyThere.length === 0){
       nameService
@@ -41,13 +52,21 @@ const App = () => {
         .then(returnedName => {
           setPersons(persons.concat(returnedName))
         })
+      displayNotification()
     } else if (alreadyThere.length !== 0) { 
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         nameService
           .update(alreadyThere[0].id, personObject)
-          .then(returnedName => setPersons(persons.map(person => person.id !== alreadyThere[0].id ? person : returnedName)))
+          .then(returnedName => {
+            setPersons(persons.map(person => person.id !== alreadyThere[0].id ? person : returnedName))
+            displayNotification()
+          })
+          .catch(error => {
+            setError(`Information of ${newName} has already been removed from server`)
+          })
       }
     }
+
     setNewName('')
     setNewNumber('')
   }
@@ -66,6 +85,8 @@ const App = () => {
       <h2>Phonebook</h2>
       <FilterComponent filter={filter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
+      <Notification message={message} />
+      <ErrorNotification message={error} />
       <AddNameComponent 
         AddName={AddName} 
         newName={newName} 
