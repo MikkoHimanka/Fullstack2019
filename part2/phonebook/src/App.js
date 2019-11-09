@@ -42,7 +42,11 @@ const App = () => {
           setPersons(persons.concat(returnedName))
         })
     } else if (alreadyThere.length !== 0) { 
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        nameService
+          .update(alreadyThere[0].id, personObject)
+          .then(returnedName => setPersons(persons.map(person => person.id !== alreadyThere[0].id ? person : returnedName)))
+      }
     }
     setNewName('')
     setNewNumber('')
