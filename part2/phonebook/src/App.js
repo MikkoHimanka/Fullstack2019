@@ -47,6 +47,15 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
+
+  const removePerson = (event) => {
+    if (window.confirm(`Delete ${event.target.name}?`)) {
+    nameService
+      .remove(event.target.id)
+      .then(nameService.getAll().then(value => setPersons(value)))
+    }
+  }
+
   
   return (
     <div>
@@ -61,7 +70,7 @@ const App = () => {
         handleNumberChange={handleNumberChange} 
       />
       <h2>Numbers</h2>
-      <BookComponent persons={persons} filter={filter} />
+      <BookComponent persons={persons} filter={filter} removePerson={removePerson} />
     </div>
   )
 }
