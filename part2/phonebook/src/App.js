@@ -75,7 +75,7 @@ const App = () => {
     if (window.confirm(`Delete ${event.target.name}?`)) {
     nameService
       .remove(event.target.id)
-      .then(nameService.getAll().then(value => setPersons(value)))
+      .then(setPersons(persons.filter(person => Number(person.id) !== Number(event.target.id))))
     }
   }
 

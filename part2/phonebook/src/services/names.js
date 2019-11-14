@@ -1,5 +1,5 @@
 import axios from 'axios'
-const defaultURL = 'http://localhost:3001/persons'
+const defaultURL = 'https://dry-fortress-95784.herokuapp.com/api/persons'
 
 const getAll = () => {
     const request = axios.get(defaultURL)
