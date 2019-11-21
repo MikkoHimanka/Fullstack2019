@@ -46,7 +46,7 @@ const App = () => {
     }
 
     const alreadyThere = persons.filter(person => person.name === newName)
-    if (personObject.name !== '' && alreadyThere.length === 0){
+    if (personObject.name !== '' && alreadyThere.length === 0 && personObject.number !== ''){
       nameService
         .create(personObject)
         .then(returnedName => {
@@ -75,7 +75,7 @@ const App = () => {
     if (window.confirm(`Delete ${event.target.name}?`)) {
     nameService
       .remove(event.target.id)
-      .then(setPersons(persons.filter(person => Number(person.id) !== Number(event.target.id))))
+      .then(setPersons(persons.filter(person => person.id !== event.target.id)))
     }
   }
 
