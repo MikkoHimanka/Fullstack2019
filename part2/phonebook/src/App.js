@@ -42,7 +42,7 @@ const App = () => {
       setMessage(`Added ${newName}`)
       setTimeout(() => {
           setMessage(null)
-        }, 3000)
+        }, 3000)     
     }
 
     const alreadyThere = persons.filter(person => person.name === newName)
@@ -51,8 +51,12 @@ const App = () => {
         .create(personObject)
         .then(returnedName => {
           setPersons(persons.concat(returnedName))
+          displayNotification()
         })
-      displayNotification()
+        .catch( error => {
+          console.log(error.response.data)
+          setError(error.response.data.error)
+        })
     } else if (alreadyThere.length !== 0) { 
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         nameService
@@ -62,7 +66,7 @@ const App = () => {
             displayNotification()
           })
           .catch(error => {
-            setError(`Information of ${newName} has already been removed from server`)
+            setError(`Information of ${newName} has already been removed from server / Number already exists`)
           })
       }
     }
